@@ -718,6 +718,7 @@ class Operator(CharmBase):
                 namespace
                 prefix
                 rewrite
+                regex
         """
         # We only need the route data, not the relation keys
         routes = list(routes.values())

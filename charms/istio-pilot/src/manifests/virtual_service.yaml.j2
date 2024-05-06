@@ -13,9 +13,15 @@ spec:
   http:
   - match:
     - uri:
+        {% if route["regex"] %}
+        regex: '{{ route["regex"]}}'
+        {% else %}
         prefix: '{{ route["prefix"] }}'
+        {% endif %}
+    {% if not route["regex"] %}
     rewrite:
       uri: '{{ route["rewrite"] or route["prefix"] }}'
+    {% endif %}
     route:
     - destination:
         host: '{{ route["service"] }}.{{ route["namespace"] }}.svc.cluster.local'
