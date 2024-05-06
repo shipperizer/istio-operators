@@ -1,0 +1,54 @@
+v3:
+  requires:
+    type: object
+    properties:
+      service:
+        type: string
+      port:
+        type: integer
+      prefix:
+        type: string
+      rewrite:
+        type: string
+      regex:
+        type: string        
+    required:
+      - service
+      - port
+      - prefix
+      - regex
+v2:
+  requires:
+    type: object
+    properties:
+      service:
+        type: string
+      port:
+        type: integer
+      namespace:
+        type: string
+      prefix:
+        type: string
+      rewrite:
+        type: string
+    required:
+      - service
+      - port
+      - namespace
+      - prefix
+v1:
+  requires:
+    type: object
+    properties:
+      service:
+        type: string
+      port:
+        type: integer
+      prefix:
+        type: string
+      rewrite:
+        type: string
+    required:
+      - service
+      - port
+      - prefix

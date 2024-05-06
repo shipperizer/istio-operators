@@ -27,6 +27,25 @@ provides:
   ingress:
     interface: ingress
     schema:
+      v3:
+        requires:
+          type: object
+          properties:
+            service:
+              type: string
+            port:
+              type: integer
+            prefix:
+              type: string
+            rewrite:
+              type: string
+            regex:
+              type: string        
+          required:
+            - service
+            - port
+            - prefix
+            - regex
       v2:
         requires:
           type: object
@@ -42,10 +61,10 @@ provides:
             rewrite:
               type: string
           required:
-          - service
-          - port
-          - namespace
-          - prefix
+            - service
+            - port
+            - namespace
+            - prefix
       v1:
         requires:
           type: object
@@ -59,11 +78,11 @@ provides:
             rewrite:
               type: string
           required:
-          - service
-          - port
-          - prefix
-    versions: [v1, v2]
-    __schema_source: https://raw.githubusercontent.com/canonical/operator-schemas/master/ingress.yaml
+            - service
+            - port
+            - prefix
+    versions: [v1,v2,v3]
+    __schema_source: https://raw.githubusercontent.com/shipperizer/istio-operators/patch/identity/hack/ingress.yaml
   ingress-auth:
     interface: ingress-auth
     schema:
