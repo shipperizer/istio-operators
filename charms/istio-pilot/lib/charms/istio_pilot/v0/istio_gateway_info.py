@@ -217,7 +217,7 @@ class GatewayRequirer(Object):
             "gateway_name": relation_data["gateway_name"],
             "gateway_namespace": relation_data["gateway_namespace"],
             "gateway_up": gateway_up,
-            "gateway_ip": gateway_ip
+            "gateway_ip": gateway_ip,
         }
 
 
@@ -239,7 +239,11 @@ class GatewayProvider(Object):
         self.relation_name = relation_name
 
     def send_gateway_relation_data(
-        self, gateway_name: str, gateway_namespace: str, gateway_up: bool = True, gateway_ip: str,
+        self,
+        gateway_name: str,
+        gateway_namespace: str,
+        gateway_ip: str,
+        gateway_up: bool = True,
     ) -> None:
         """Updates the relation data bag with data from the local gateway.
 
@@ -261,6 +265,6 @@ class GatewayProvider(Object):
                     "gateway_name": gateway_name,
                     "gateway_namespace": gateway_namespace,
                     "gateway_up": str(gateway_up).lower(),
-                    "gateway_ip": gatway_ip,
+                    "gateway_ip": gateway_ip,
                 }
             )
