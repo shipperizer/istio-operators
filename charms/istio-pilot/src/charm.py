@@ -114,6 +114,7 @@ class Operator(CharmBase):
             key="istio-cert",
             peer_relation_name=self.peer_relation_name,
             cert_subject=self._cert_subject,
+            extra_sans_dns=[self._cert_subject],
         )
 
         # Observe this custom event emitted by the cert_handler library on certificate
@@ -669,12 +670,19 @@ class Operator(CharmBase):
         """
         if not self._is_gateway_up:
             raise Exception("Please configure the Gateway SVC")
+        
         svc = self._get_gateway_service()
+
+        gateway_dns = ""
+        if self._cert_handler.enabled and self._cert_subject:
+            gateway_dns = self._cert_subject
+
         self.gateway_provider.send_gateway_relation_data(
             gateway_name=self._gateway_name,
             gateway_namespace=self._gateway_namespace,
             gateway_up=self._is_gateway_up,
             gateway_ip=_get_gateway_address_from_svc(svc),
+            gateway_dns=gateway_dns,
         )
 
     def _reconcile_gateway(self):

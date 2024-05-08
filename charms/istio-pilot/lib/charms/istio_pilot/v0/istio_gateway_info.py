@@ -212,12 +212,14 @@ class GatewayRequirer(Object):
         gateway_up = relation_data.get("gateway_up", "true")
         gateway_up = gateway_up.lower() == "true"
         gateway_ip = relation_data.get("gateway_ip")
+        gateway_dns = relation_data.get("gateway_dns")
 
         return {
             "gateway_name": relation_data["gateway_name"],
             "gateway_namespace": relation_data["gateway_namespace"],
             "gateway_up": gateway_up,
             "gateway_ip": gateway_ip,
+            "gateway_dns": gateway_dns,
         }
 
 
@@ -244,6 +246,7 @@ class GatewayProvider(Object):
         gateway_namespace: str,
         gateway_ip: str,
         gateway_up: bool = True,
+        gateway_dns: str = "",
     ) -> None:
         """Updates the relation data bag with data from the local gateway.
 
@@ -266,5 +269,6 @@ class GatewayProvider(Object):
                     "gateway_namespace": gateway_namespace,
                     "gateway_up": str(gateway_up).lower(),
                     "gateway_ip": gateway_ip,
+                    "gateway_dns": gateway_dns,
                 }
             )
