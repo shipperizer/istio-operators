@@ -668,20 +668,29 @@ class Operator(CharmBase):
         * any changes are made to the Gateway or ingress-auth, because that may change the status
           of the gateway
         """
-        if not self._is_gateway_up:
-            raise Exception("Please configure the Gateway SVC")
+        # TODO @shipperizer anaylze if this needs to be here
+        # if not self._is_gateway_up:
+        #     raise Exception("Please configure the Gateway SVC")
         
-        svc = self._get_gateway_service()
-
         gateway_dns = ""
-        if self._cert_handler.enabled and self._cert_subject:
-            gateway_dns = self._cert_subject
+        gateway_ip = ""
 
+        try:
+            svc = self._get_gateway_service()
+            gateway_ip =_get_gateway_address_from_svc(svc)
+        
+            if self._cert_handler.enabled and self._cert_subject:
+                gateway_dns = self._cert_subject
+
+        except ApiError as e:
+            print("gateway service not found")
+
+        
         self.gateway_provider.send_gateway_relation_data(
             gateway_name=self._gateway_name,
             gateway_namespace=self._gateway_namespace,
             gateway_up=self._is_gateway_up,
-            gateway_ip=_get_gateway_address_from_svc(svc),
+            gateway_ip=gateway_ip,
             gateway_dns=gateway_dns,
         )
 
